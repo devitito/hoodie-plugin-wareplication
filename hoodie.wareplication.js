@@ -5,8 +5,7 @@
  */
 
 Hoodie.extend(function(hoodie) {
-  hoodie.waReplication = {
-    apply: hoodie.task('wareplication').add,
-    on: hoodie.task('wareplication').on
+  hoodie.wareplication = {
+    apply: hoodie.task('wareplication').start
   };
 });

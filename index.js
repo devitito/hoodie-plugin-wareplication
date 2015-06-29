@@ -2,11 +2,9 @@
 
 // Run in the hoodie context
 module.exports = function(hoodie, cb) {
-    debugger;
     hoodie.task.on('wareplication:add', handleNewReplication);
 
     function handleNewReplication(originDb, message) {
-        debugger;
         hoodie.request('GET', '_config/admins', {}, function(err, data){
             if (err) {
                 return addReplicationCallback(err, data);
