@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/devitito/hoodie-plugin-wareplication/issues"
   },
-  "homepage": "https://github.com/devitito/hoodie-plugin-wareplication"
+  "homepage": "https://github.com/devitito/hoodie-plugin-wareplication",
+  "dependencies": {
+    "lodash": "^3.9.3"
+  }
 }

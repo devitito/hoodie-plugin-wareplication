@@ -1,43 +1,36 @@
-//var config = require('../config/environment');
+var _ = require('lodash');
 
 // Run in the hoodie context
 module.exports = function(hoodie, cb) {
     hoodie.task.on('wareplication:add', handleNewReplication);
 
     function handleNewReplication(originDb, message) {
-        hoodie.request('GET', '_config/admins', {}, function(err, data){
-            if (err) {
-                return addReplicationCallback(err, data);
-            };
 
-             var index = data.indexOf('admin');
+        hoodie.account.findAll(function(error, accounts) {
+            if (error) {
+                return hoodie.task.error(origin, message, error);
+            }
 
-            if (index == -1)
-                return addReplicationCallback('no admin defined', data);
+            var account = _.find(accounts, {database: originDb});
 
-             var pwData = data[index].replace('-pbkdf2-','').split(',');
-             var userObj = {
-                 username: data[index],
-                 hash: pwData[0],
-                 salt: pwData[1],
-                 password: ''
-             }
-
-
-             var couch = {
-                uri:    'https://'+userObj.username+':'+userObj.hash+'@whenagain-dev-couch.appback.com'
-            };
-
-            var nano = require('nano')(couch.uri);
-            addReplicationCallback(null, data);
-         });
-    };
-
-    function addReplicationCallback(error, message) {
-        if(error){
-            return hoodie.task.error(originDb, message, error);
-        }
-        return hoodie.task.success(originDb, message);
+            //Add a new document to _replicator db
+            hoodie.database('_replicator').add('centralize_user', {
+                "id": account.name.split('/')[1],
+                "source":originDb,
+                "target":"target",
+                "continuous":true,
+                "create_target": true,
+                "user_ctx": {
+                    "roles": ["_admin"]
+                }
+            }, function (err, data) {
+                if(err){
+                    console.log(err);
+                    return hoodie.task.error(originDb, message, err);
+                }
+                return hoodie.task.success(originDb, message);
+            });
+        });
     };
 
     //Hoodie callback
