@@ -8,7 +8,9 @@ Each entry in _users is scanned and a replication document is created in _replic
 In frontend application:
 
 ```
-hoodie.wareplication.apply();
+hoodie.wareplication.apply({
+    target: "mycentraldb"
+});
 ```
 
 License: ISC

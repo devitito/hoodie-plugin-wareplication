@@ -17,7 +17,7 @@ module.exports = function(hoodie, cb) {
             hoodie.database('_replicator').add('centralize_user', {
                 "id": account.name.split('/')[1],
                 "source":originDb,
-                "target":"target",
+                "target":message.target,
                 "continuous":true,
                 "create_target": true,
                 "user_ctx": {
@@ -25,7 +25,6 @@ module.exports = function(hoodie, cb) {
                 }
             }, function (err, data) {
                 if(err){
-                    console.log(err);
                     return hoodie.task.error(originDb, message, err);
                 }
                 return hoodie.task.success(originDb, message);
