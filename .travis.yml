@@ -1,0 +1,14 @@
+before_install:
+- npm install -g grunt-cli phantomjs
+before_deploy:
+- grunt before-deploy
+after_deploy:
+- grunt after-deploy
+language: node_js
+node_js:
+- '0.10'
+deploy:
+  provider: npm
+  email: the.devitito@gmail.com
+  api_key:
+    secure: hlsXF0qvaAF7EFKrJRLybqMKWpF6Du+LpJzTpzSndnWLsrNiDe0mcbZXkejdG5jAEuhHMngQNosMXllcc2r10Yq0Kwp11fLCwHPs4ljxRL3IP4xruk1OhZefPsgU+aQjGABMUHHi3H+sZzwBS7L0SgHr4F2kTJHicQHU+cKCkowJoADtt5NrjLdPrQuXXrS8N1CyXTrzFfoI5iyLfuyjJ5UT+0OU7bN9yrWy5ipQ7CQtlPU1O2QlIzY0gvI9PKvDQ2VKzxjgYQXpnXeYWcFXE9tyGetUx6jC4APLho1EJ10rbPQekLN5MHpzP1/iR+fvSiKQs+C9w2JQ2pEiQqPBPTphX42ynvzuo8wsxE43dqn6r8/MV72WV3OcmHg2kXhOpzycjMHXE6ConqRFMSvtIb8zCPNnI4BCyv6kYa3ZyKdK1C7TuXoXlUB8d3OFl284vH9O3SF/TQj5raMlga9CYoks0vm9rekySI+cSxgy+u8K81SODNsgT3tmeT6lWRSk2csjYupAhAGoqlbhUak4PqFnMMDlgDGvniK05tspfmYjRHRpOxB2UFynazOdsiPYIovon7eRnE5BJTb1I6HTaGjAYAVPJ6xfoiTJ5iFqyXZTEhukA7yyAHpmdnc/itAbA3oFr5ZyqaZGWJZYyeTGUNmN7BZfQ+DXGqp7f2boog0=
