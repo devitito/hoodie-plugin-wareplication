@@ -11,13 +11,17 @@ module.exports = function(hoodie, cb) {
                 return hoodie.task.error(origin, message, error);
             }
 
+            var targetDb = 'target';
+            if (!_.isUndefined(message.target))
+                targetDb = message.target;
+
             var account = _.find(accounts, {database: originDb});
 
             //Add a new document to _replicator db
             hoodie.database('_replicator').add('centralize_user', {
                 "id": account.name.split('/')[1],
                 "source":originDb,
-                "target":message.target,
+                "target":targetDb,
                 "continuous":true,
                 "create_target": true,
                 "user_ctx": {
